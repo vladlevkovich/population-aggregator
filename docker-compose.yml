@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    env_file: .env
+#    environment:
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_DB: population_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+#  alembic:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: alembic_migrations
+
+  get_data:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: get_data_service
+    depends_on:
+      - postgres
+    env_file: .env
+    command: ["sh", "/app/run_migrations.sh", "python", "-m", "app.services.get_data"]
+
+  print_data:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: print_data_service
+    depends_on:
+      - postgres
+    env_file: .env
+    command: ["sh", "/app/run_migrations.sh", "python", "-m", "app.services.print_data"]
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: countrypopulation
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
