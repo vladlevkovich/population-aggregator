@@ -22,7 +22,7 @@ This project is an asynchronous web service developed using FastAPI that stores 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/vladlevkovich/population-test-task.git
+git clone https://github.com/vladlevkovich/population-aggregator.git
 cd population-aggregator
 ```
 
