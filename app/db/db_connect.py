@@ -7,8 +7,7 @@ load_dotenv()
 
 class Database:
     def __init__(self):
-        # self.engine = create_async_engine(url=os.getenv('DATABASE_URL'), echo=False)
-        self.engine = create_async_engine(url=os.getenv('LOCAL_DATABASE_URL'), echo=False)
+        self.engine = create_async_engine(url=os.getenv('DATABASE_URL'), echo=False)
         self.session = async_sessionmaker(
             bind=self.engine,
             autoflush=False,
